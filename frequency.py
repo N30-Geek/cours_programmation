@@ -30,9 +30,9 @@ fr_hxgrms = ["DANS","LEMENT","QUELLE","QUELQU","UELQUE","ENDANT","TAIENT","ENCOR
 
 
 
-if __name__ == "__main__":
-    for k, v in fr_ltrs_frq.items():
-        print(f"{k} = {v}")
+# if __name__ == "__main__":
+#     for k, v in fr_ltrs_frq.items():
+#         print(f"{k} = {v}")
     
-    print(f"{ "ENT" in ''.join(fr_trgms)}")
-    print(f"{"".join(fr_trgms)}")
+#     print(f"{ "ENT" in ''.join(fr_trgms)}")
+#     print(f"{"".join(fr_trgms)}")

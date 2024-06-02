@@ -8,7 +8,7 @@
 
 
 #importation des modules utilisé
-import os, time
+import os, time, sys
 from frequency import *
 
 
@@ -38,7 +38,7 @@ class LanguageDetect:
         self.alpha = [lttr for lttr in "abcdefghijklmnopqrstuvwxyz"]
 
     
-    def aproxiNbr(self, fix: float, dpsmnt: float, fq_vl:float) -> bool:
+    def _aproxiNbr(self, fix: float, dpsmnt: float, fq_vl:float) -> bool:
         """la méthode de recherche d'une valeur approximative
 
         Args:
@@ -56,10 +56,11 @@ class LanguageDetect:
         self.express = (self.fq_vl + self.dpsmt_pxi) > self.fix
 
         if (((self.fix - self.fq_vl) <= self.fq_vl) and ( self.dpsmt_pxi <= (self.fix + self.dpsmt_pxi))):
-                return True
+                return "True"
         else:
-            return False
-        
+            return "False"
+
+    
     def frequency(self, wrds: str) -> dict:
         """Méthode de calcule de fréquence d'apparrution de lettre dans l'alphabet fr ou en
 
@@ -79,6 +80,8 @@ class LanguageDetect:
             self.l_occur_prctg[key] = round((100 * value / 26),1)
 
         return self.l_occur_prctg
+    
+    
 
     def detectLanguage(self, wrds_frqncs: dict) -> str:
         """fonction principale de detection du langue
@@ -91,19 +94,66 @@ class LanguageDetect:
         """
         self.wrds_frqncs = wrds_frqncs
         languages = ["fr", "en"]
+        self.fr_crpus = {}
         lg_rounded = ""
-        
+        print("Test 0")
         ## checking all letters and th
-        for l in list(self.wrds_frqncs.keys()):
+        
+        
+        for l in self.wrds_frqncs.keys():
+            print(f"{l} = {self.wrds_frqncs[l]}")
+
+
+
+
+################################################
+# Fonction du gestion du fichier
+
+
+help = """
+    veuillez utiliser le fichier comme ceci:
+        languegeDetector.py [-f][-v]
+        -f == for file name
+        -v == show script version
+
+    Syntax: languageDetector.py -f file.txt
+            languageDetector.py -v
             
-            print(self.wrds_frqncs[l])
-        
-        
-        
-        
-        return languages # la langue truevé 
+"""
+def fileManager():
+    out_put_f_content = ""
+    all_args = sys.argv
 
 
+    print("Test 1")
+    
+    if len(all_args) < 3:
+        if all_args[1] == "-h": # renvoie le help si pour le l'argument -h
+            return help
+            
+        if len(all_args) == 1:
+            return  "-- Il  manque  les arguments du fichier | type : languageDetector.py -h for help  --"
+        else:
+            return "-- Syntax to open file error -- | type : languageDetector.py -h for help"
+        
+    else:
+        if all_args[1].lower() == "-h":
+            return help
+        elif all_args[1].lower() == "-v":
+            return "Script version : 0.1 python3.x"
+        elif all_args[1].lower() == "-f":
+            f_name = all_args[2].lower()
+
+            with open(f_name) as f_n:
+                for i in f_n:
+                    if i == "\n":
+                        pass
+                    else:
+                        print("Test 5")
+                        out_put_f_content += i
+        return   out_put_f_content
+        
+    
 
 ## comparaison of corpus with letter
 
@@ -112,21 +162,11 @@ def frCorpusDector(lttr: str, value: float) -> bool:
         print("True")
 
 # ###############################################################
-
-
+# test code section
 if __name__ == "__main__":
     print("="*50)
     print("programme de tetection de langue".upper())
     print("="*50)
-    
-    ld = LanguageDetect() # instanciation de l'objet ld 
-    
-    frqnce = ld.frequency("Je suis une personne")    
-    
-    ld.detectLanguage(frqnce)
 
-
-
-
-
-     
+    print(fileManager())
+    #LanguageDetect.frequency(fileManager())

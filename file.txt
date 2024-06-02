@@ -1,0 +1,3 @@
+Je suis le texte à analyser 
+Je suis le contenu du fichier texte
+Je  là pour le teste d'analyse de donnée ou de fréquence de lettre alphabetique
